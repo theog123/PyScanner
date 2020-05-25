@@ -10,7 +10,7 @@ This program will scan barcodes and add specific information to a google spreads
 
 
 #### Input: /dev/hidraw0
-### Output: text file
+#### Output: text file
 
 The scanner is abstracted by the file /dev/hidraw0.
 
@@ -23,8 +23,8 @@ The scanner is abstracted by the file /dev/hidraw0.
 
 
 
-### Input: the textfile containing barcodes for given id numbers
-### Output: a spreadsheet tabulating the attendance
+#### Input: the textfile containing barcodes for given id numbers
+#### Output: a spreadsheet tabulating the attendance
 
 
 There is separate attendance access outside of the controller making it easy to use another database in the future. Other data bases include SQL or Oracle.
