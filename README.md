@@ -12,7 +12,7 @@ This program will scan barcodes and add specific information to a google spreads
 #### Input: /dev/hidraw0
 #### Output: text file
 
-The scanner is abstracted by the file /dev/hidraw0.
+The scanner is abstracted by the file /dev/hidraw0. The scanner driver takes /dev/hidraw0 as a bytestream input and reads it to a textfile by converting it into ascII text. 
 
 
 ## Controller
