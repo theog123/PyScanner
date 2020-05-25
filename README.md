@@ -4,15 +4,24 @@ This program will scan barcodes and add specific information to a google spreads
 ## Scanner
 
 
+
+![Scanner (1)](https://user-images.githubusercontent.com/32689872/82836716-f235ce80-9e7b-11ea-9f7a-569c7bf67028.png)
+
+
+
 ### Input: /dev/hidraw0
 ### Output: text file
 
-The sscanner is abstracted by the file /dev/hidraw0.
+The scanner is abstracted by the file /dev/hidraw0.
 
 
 ## Controller
 
+
+
 ![Controller](https://user-images.githubusercontent.com/32689872/82836620-b3077d80-9e7b-11ea-9002-fe80c4c06676.png)
+
+
 
 ### Input: the textfile containing barcodes for given id numbers
 ### Output: a spreadsheet tabulating the attendance
