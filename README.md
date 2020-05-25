@@ -9,7 +9,7 @@ This program will scan barcodes and add specific information to a google spreads
 
 
 
-### Input: /dev/hidraw0
+#### Input: /dev/hidraw0
 ### Output: text file
 
 The scanner is abstracted by the file /dev/hidraw0.
