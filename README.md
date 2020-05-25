@@ -12,6 +12,8 @@ The sscanner is abstracted by the file /dev/hidraw0.
 
 ## Controller
 
+![Controller](https://user-images.githubusercontent.com/32689872/82836620-b3077d80-9e7b-11ea-9002-fe80c4c06676.png)
+
 ### Input: the textfile containing barcodes for given id numbers
 ### Output: a spreadsheet tabulating the attendance
 
