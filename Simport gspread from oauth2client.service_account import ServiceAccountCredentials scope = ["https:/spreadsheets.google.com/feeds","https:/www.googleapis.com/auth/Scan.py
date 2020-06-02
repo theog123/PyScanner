@@ -105,14 +105,6 @@ class Controller:
        dataTemp[ temp[ 0 ] ] = temp[ 1 ].strip( '\n' )
     return dataTemp
 
-  def listData( self, name ):
-    temp=[ ]
-    data=open( name,"r" )
-    lines=data.readlines( )
-    for i in range( len( lines ) ):
-      lines[ i ] = lines[ i ].strip( '\n' )
-    return lines
-
   def makeTardy( self ):
     for key in self.scanMap:
       if len( self.scanMap[ key ]) == 1:
