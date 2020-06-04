@@ -1,13 +1,13 @@
 import gspread
+import time
+import datetime
+from datetime import date
 from oauth2client.service_account import ServiceAccountCredentials
 scope = [ "https://spreadsheets.google.com/feeds","https://www.googleapis.com/auth/drive" ]
 creds = ServiceAccountCredentials.from_json_keyfile_name( "creds.json" , scope )
 client = gspread.authorize( creds )
 spreadName = "testsheet"
 spreadsheet = client.open( spreadName )
-import datetime
-import time
-from datetime import date
 
 class Spreadsheet:
 
@@ -42,7 +42,9 @@ class Spreadsheet:
     countA = 2
     for a in absentList:
       self.sheet.update_cell( countA, 1, a )
- 
+      countA = countA + 1
+
+
   def addCheckIn( self, checkInDict ):
     countIn = 2
     for I in checkInDict:
@@ -58,9 +60,8 @@ class Spreadsheet:
       self.sheet.update_cell( countOut, 6 , checkOutDict[ O ] )
       countOut = countOut + 1
 
+      class Controller:
 
-class Controller:
-#to do: rename data to student map and scan map
   def __init__( self, sheet ):
     self.studentMap = self.regRead( "Data.txt" )
     self.sheet = sheet
@@ -68,11 +69,12 @@ class Controller:
     self.tardyList = [ ]
     self.absentList = [ ]
     self.checkInDict = { }
-    self.checkOutDict={ }
+    self.checkOutDict = { }
     self.today = datetime.datetime.today( )
     self.year = self.today.year
     self.month = self.today.month
     self.day = self.today.day
+    self.name = datetime.date.today()
 
   def readData( self, name ):
     temp=' '
@@ -108,8 +110,8 @@ class Controller:
   def makeTardy( self ):
     for key in self.scanMap:
       if len( self.scanMap[ key ]) == 1:
-        lowBound = float( datetime.datetime( self.year, self.month, self.day, 15,40 ).strftime( '%s' ) )
-        highBound = float( datetime.datetime( self.year,self.month , self.day, 15, 50 ).strftime( '%s' ) )
+        lowBound = float( datetime.datetime( self.year, self.month, self.day, 10, 20 ).strftime( '%s' ) )
+        highBound = float( datetime.datetime( self.year,self.month , self.day, 10, 25).strftime( '%s' ) )
         if float( self.scanMap[ key ][ 0 ]) >= lowBound and float(self.scanMap[ key ][ 0 ]) < highBound:
           for num in self.studentMap:
             if key == num:
@@ -126,8 +128,8 @@ class Controller:
 
     for key in self.scanMap:
       if len( self.scanMap[ key ]) == 1:
-        lowBound = float( datetime.datetime( self.year, self.month, self.day, 15, 30 ).strftime( '%s' ) )
-        highBound = float( datetime.datetime( self.year,self.month, self.day, 15, 40 ).strftime( '%s' ) )
+        lowBound = float( datetime.datetime( self.year, self.month, self.day, 10, 15 ).strftime( '%s' ) )
+        highBound = float( datetime.datetime( self.year,self.month, self.day, 10, 20 ).strftime( '%s' ) )
         if float( self.scanMap[ key ][ 0 ] ) >= lowBound and float( self.scanMap[ key ][ 0 ] ) < highBound:
           for num in self.studentMap:
            if key == num:
@@ -137,10 +139,10 @@ class Controller:
     print( self.absentList )
 
   def makePresent( self ):
-    lowBound1 = float( datetime.datetime( self.year, self.month, self.day , 15 , 30 ).strftime('%s' ) )
-    lowBound2 = float( datetime.datetime( self.year, self.month, self.day, 15, 40 ).strftime( '%s' ) )
-    highBound1 = float( datetime.datetime( self.year, self.month, self.day, 15, 40 ).strftime( '%s ') )
-    highBound2 = float( datetime.datetime( self.year,self.month , self.day, 15, 50 ).strftime( '%s' ) )
+    lowBound1 = float( datetime.datetime( self.year, self.month, self.day , 10 , 15 ).strftime('%s' ) )
+    lowBound2 = float( datetime.datetime( self.year, self.month, self.day, 10, 20 ).strftime( '%s' ) )
+    highBound1 = float( datetime.datetime( self.year, self.month, self.day, 10, 20 ).strftime( '%s ') )
+    highBound2 = float( datetime.datetime( self.year,self.month , self.day, 10, 25 ).strftime( '%s' ) )
     for key in self.scanMap:
       if len( self.scanMap[ key ] ) == 2:
         if float( self.scanMap[ key ][ 0 ]) >= lowBound1 and float( self.scanMap[ key ][ 0 ]) < highBound1:
@@ -156,15 +158,21 @@ class Controller:
     print( self.checkOutDict )
 
   def newTabTime( self ):
-    self.sheet.newTab( str( datetime.date.today() + datetime.timedelta( days = 1 ) ) )
+    count=0
+    names = spreadsheet.worksheets()
+    for val in range( 0, len( names ) - 1 ):
+      if str( self.name ) in str( spreadsheet.get_worksheet( val ) ):
+        self.sheet.newTab( str( self.name ) )
+        count = count+1
+    if count==0:
+      self.sheet.sheet.clear()
+
 
 val=Spreadsheet()
 c=Controller(val)
+c.newTabTime()
 c.makeTardy()
 c.makeAbsent()
 c.makePresent()
-c.newTabTime()
-
-
 
 
